@@ -31,7 +31,7 @@ namespace PhoneBookServer.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody]Contact contact)
+        public async Task<ActionResult> Post([FromBody]Contact contact)
         {
 
             var contactErrors = contact.Validate();
@@ -46,8 +46,8 @@ namespace PhoneBookServer.Controllers
 
             try
             {
-                _contactsRepository.CreateContact(contact);
-                return Ok(contact.Id);
+                var newId = await _contactsRepository.CreateContact(contact);
+                return Ok(newId);
             }
             catch (Exception ex)
             {

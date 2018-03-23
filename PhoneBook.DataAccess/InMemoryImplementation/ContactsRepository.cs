@@ -14,7 +14,7 @@ namespace PhoneBook.DataAccess.InMemoryImplementation
              new Contact("Miloš", "Spasojević", new []{ new PhoneNumber(PhoneNumberType.Cellphone, "+381 60 412 84 22"),  })
         };
 
-        public Task CreateContact(Contact contact)
+        public Task<Guid> CreateContact(Contact contact)
         {
             ValidateContact(contact);
 
@@ -25,7 +25,7 @@ namespace PhoneBook.DataAccess.InMemoryImplementation
             Contacts.Add(contact);
 
 
-            return Task.FromResult(true);
+            return Task.FromResult(contact.Id);
         }
 
         public Task UpdateContact(Guid id, Contact contact)

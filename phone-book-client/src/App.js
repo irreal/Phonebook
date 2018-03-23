@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import ContactComponent from './Components/ContactComponent.js'
 import axios from "axios";
 
 class App extends Component {
@@ -16,6 +17,7 @@ class App extends Component {
         contacts: result.data
       });
     }).catch(error => {
+      alert('there was a problem loading the contacts');
       console.log(error);
     });
   }
@@ -39,15 +41,28 @@ class App extends Component {
     axios({
       method: 'post',
       url: 'http://phonebookserver20180323113131.azurewebsites.net/api/contacts',
-      headers: { 'Access-Control-Allow-Origin': '*' },
       data: contact
     }).then(function (result) {
-      this.setState({ newContactFirstName: "", newContactLastName: "", newContactPhoneNumber: "" });
+      _this.setState({ newContactFirstName: "", newContactLastName: "", newContactPhoneNumber: "" });
       _this.loadAllContacts();
     }).catch(error => {
       alert('there was a problem creating the contact');
       console.log(error);
     });
+  }
+
+  deleteContact(contact) {
+    var _this = this;
+    axios({
+      method: 'delete',
+      url: 'http://phonebookserver20180323113131.azurewebsites.net/api/contacts/' + contact.id
+    }).then(function (result) {
+      _this.loadAllContacts();
+    }).catch(error => {
+      alert('there was a problem deleting the contact');
+      console.log(error);
+    });
+    
   }
 
   componentDidMount() {
@@ -78,7 +93,7 @@ class App extends Component {
               {this.state.contacts.map(c => {
                 return (
                   <tr key={c.id}>
-                    <ContactComponent contact={c} />
+                    <ContactComponent contact={c} handleDelete={(contact)=>this.deleteContact(contact)} />
                   </tr>
                 );
               })}
@@ -109,29 +124,6 @@ class App extends Component {
   }
 }
 
-class PhoneNumbersComponent extends Component {
-  render() {
-    return (
-      this.props.numbers.map(n => {
-        return (
-          <td key={n.number}>{n.number}</td>
-        );
-      })
-    );
-  }
-}
 
-class ContactComponent extends Component {
-  render() {
-    var cells = [];
-    cells.push(<td key={1}>{this.props.contact.firstName}</td>);
-    cells.push(<td key={2}>{this.props.contact.lastName}</td>);
-    if (this.props.contact.phoneNumbers !== undefined && this.props.contact.phoneNumbers.length > 0) {
-      cells.push(<PhoneNumbersComponent key={3} numbers={this.props.contact.phoneNumbers} />);
-    }
-
-    return cells;
-  }
-}
 
 export default App;
