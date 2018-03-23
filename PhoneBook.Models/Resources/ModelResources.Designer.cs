@@ -61,7 +61,7 @@ namespace PhoneBook.Models.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A Person must have at least the FirstName defined..
+        ///   Looks up a localized string similar to A Contact must have at least the FirstName defined..
         /// </summary>
         internal static string Person_No_Valid_FirstName {
             get {

@@ -124,6 +124,6 @@
     <value>Allowed characters are digits 0-9, dashes, parentheses and slash</value>
   </data>
   <data name="Person_No_Valid_FirstName" xml:space="preserve">
-    <value>A Person must have at least the FirstName defined.</value>
+    <value>A Contact must have at least the FirstName defined.</value>
   </data>
 </root>
