@@ -11,13 +11,11 @@ namespace PhoneBookServer.Controllers
     [Route("api/[controller]")]
     public class ContactsController : Controller
     {
-        private IContactsRepository _contactsRepository;
+        private readonly IContactsRepository _contactsRepository;
 
-        public ContactsController()
+        public ContactsController(IContactsRepository contactsRepository)
         {
-            //In a real application this service would be injected through the constructor by using a DependencyInjection controller and setting up a binding for IContactRepository
-
-            this._contactsRepository = new PhoneBook.DataAccess.InMemoryImplementation.ContactsRepository(); // Mock repository for development
+            this._contactsRepository = contactsRepository;
         }
 
         [HttpGet]

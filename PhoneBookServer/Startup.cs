@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PhoneBook.DataAccess.InMemoryImplementation;
+using PhoneBook.DataAccess.Interface;
 
 namespace PhoneBookServer
 {
@@ -19,6 +21,7 @@ namespace PhoneBookServer
         {
             services.AddCors();
             services.AddMvc();
+            services.AddTransient<IContactsRepository, ContactsRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
