@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using PhoneBook.Models.Resources;
 
 namespace PhoneBook.Models
@@ -31,12 +32,21 @@ namespace PhoneBook.Models
         {
         }
 
-        public Guid Id { get; private set; }
+        public Contact() // Temp hack for deserialization, I would normally implement a custom json deserializer for this object
+        {
+                
+        }
 
+        [JsonProperty("id")]
+        public Guid Id { get; set; }
+
+        [JsonProperty("first-name")]
         public string FirstName { get; set; }
 
+        [JsonProperty("last-name")]
         public string LastName { get; set; }
 
+        [JsonProperty("phone-numbers")]
         public List<PhoneNumber> PhoneNumbers { get; set; }
 
         public string FullName => $"{FirstName} {LastName ?? string.Empty}".Trim(); // .Trim() removes empty trailing space if there is no last name defined

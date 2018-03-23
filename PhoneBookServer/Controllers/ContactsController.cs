@@ -3,28 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
-using PhoneBook.DataAccess.InMemoryImplementation;
 using PhoneBook.DataAccess.Interface;
 using PhoneBook.Models;
 
 namespace PhoneBookServer.Controllers
 {
     [Route("api/[controller]")]
-    public class ContactController : Controller
+    public class ContactsController : Controller
     {
         private IContactsRepository _contactsRepository;
 
-        public ContactController()
+        public ContactsController()
         {
             //In a real application this service would be injected through the constructor by using a DependencyInjection controller and setting up a binding for IContactRepository
 
             this._contactsRepository = new PhoneBook.DataAccess.InMemoryImplementation.ContactsRepository(); // Mock repository for development
-        }
-
-        public ContactController(IContactsRepository contactsRepository)
-        {
-            this._contactsRepository = contactsRepository;
         }
 
         [HttpGet]
@@ -44,17 +37,19 @@ namespace PhoneBookServer.Controllers
         {
 
             var contactErrors = contact.Validate();
-            contactErrors.AddRange(contact.PhoneNumbers.SelectMany(pn=>pn.Validate()));
+            contactErrors.AddRange(contact.PhoneNumbers?.SelectMany(pn=>pn.Validate()) ?? new List<string>());
 
             if (contactErrors.Count > 0)
             {
                 return BadRequest(contactErrors);
             }
 
+            contact.Id = Guid.NewGuid();
+
             try
             {
                 _contactsRepository.CreateContact(contact);
-                return Ok();
+                return Ok(contact.Id);
             }
             catch (Exception ex)
             {

@@ -1,9 +1,8 @@
-using System;
 using Xunit;
 
-namespace PhoneBookServer.Test
+namespace PhoneBookServer.Test.Controllers
 {
-    public class UnitTest1
+    public class ContactControllerTests
     {
         [Fact]
         public void Test1()

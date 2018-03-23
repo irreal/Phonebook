@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using PhoneBook.Models.Resources;
 
 namespace PhoneBook.Models
@@ -14,8 +16,10 @@ namespace PhoneBook.Models
             this.Number = phoneNumber;
         }
 
+        [JsonProperty("number") ]
         public string Number { get; set; }
 
+        [JsonProperty("number-type")]
         public PhoneNumberType NumberType { get; set; }
         public override List<string> Validate()
         {
