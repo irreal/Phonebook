@@ -9,7 +9,6 @@ class App extends Component {
     this.state = { contacts: [], newContactFirstName: "", newContactLastName: "", newContactPhoneNumber: "" };
   }
 
-
   loadAllContacts() {
     var _this = this;
     this.serverRequest = axios.get("http://phonebookserver20180323113131.azurewebsites.net/api/contacts").then(function (result) {
@@ -21,19 +20,7 @@ class App extends Component {
       console.log(error);
     });
   }
-
-  handleNameChange(event) {
-    this.setState({ newContactFirstName: event.target.value });
-  }
-
-  handleLastNameChange(event) {
-    this.setState({ newContactLastName: event.target.value });
-  }
-
-  handlePhoneNumberChange(event) {
-    this.setState({ newContactPhoneNumber: event.target.value });
-  }
-
+ 
   addNewNumber() {
     var number = { numberType: 0, number: this.state.newContactPhoneNumber };
     var contact = { firstName: this.state.newContactFirstName, lastName: this.state.newContactLastName, phoneNumbers: [number] };
@@ -120,10 +107,21 @@ class App extends Component {
           <button onClick={() => this.addNewNumber()}>Add new</button>
         </div>
       </div>
-    );
+    );   
   }
+
+  handleNameChange(event) {
+    this.setState({ newContactFirstName: event.target.value });
+  }
+
+  handleLastNameChange(event) {
+    this.setState({ newContactLastName: event.target.value });
+  }
+
+  handlePhoneNumberChange(event) {
+    this.setState({ newContactPhoneNumber: event.target.value });
+  }
+
 }
-
-
 
 export default App;
