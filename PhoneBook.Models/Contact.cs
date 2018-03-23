@@ -40,13 +40,13 @@ namespace PhoneBook.Models
         [JsonProperty("id")]
         public Guid Id { get; set; }
 
-        [JsonProperty("first-name")]
+        [JsonProperty("firstName")]
         public string FirstName { get; set; }
 
-        [JsonProperty("last-name")]
+        [JsonProperty("lastName")]
         public string LastName { get; set; }
 
-        [JsonProperty("phone-numbers")]
+        [JsonProperty("phoneNumbers")]
         public List<PhoneNumber> PhoneNumbers { get; set; }
 
         public string FullName => $"{FirstName} {LastName ?? string.Empty}".Trim(); // .Trim() removes empty trailing space if there is no last name defined

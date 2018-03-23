@@ -18,7 +18,7 @@ namespace PhoneBook.Models
         [JsonProperty("number") ]
         public string Number { get; set; }
 
-        [JsonProperty("number-type")]
+        [JsonProperty("numberType")]
         public PhoneNumberType NumberType { get; set; }
         public override List<string> Validate()
         {
