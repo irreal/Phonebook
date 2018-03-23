@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using PhoneBook.Models.Resources;
 
 namespace PhoneBook.Models
 {
-    public class PhoneNumber : BaseValidatableObject, IValidatable
+    public class PhoneNumber : BaseValidatableObject
     {
         private readonly Char[] _allowedExtraCharacters = { '(', ')', '-', '/','+',' ' };
         public PhoneNumber(PhoneNumberType phoneNumberType, string phoneNumber)
