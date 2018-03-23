@@ -79,7 +79,7 @@ namespace PhoneBook.Models.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Allowed characters are digits 0-9, dashes, parentheses and slash.
+        ///   Looks up a localized string similar to Allowed characters are digits 0-9, spaces, dashes, parentheses, slash and plus.
         /// </summary>
         internal static string PhoneNumber_Valid_Characters {
             get {

@@ -9,7 +9,10 @@ namespace PhoneBook.DataAccess.InMemoryImplementation
 {
     public class ContactsRepository : IContactsRepository
     {
-        private static List<Contact> Contacts = new List<Contact>();
+        private static readonly List<Contact> Contacts = new List<Contact>
+        { // Initial mock data
+             new Contact("Miloš", "Spasojević", new []{ new PhoneNumber(PhoneNumberType.Cellphone, "+381 60 412 84 22"),  })
+        };
 
         public Task CreateContact(Contact contact)
         {
@@ -25,15 +28,20 @@ namespace PhoneBook.DataAccess.InMemoryImplementation
             return Task.FromResult(true);
         }
 
-        public Task UpdateContact(Contact contact)
+        public Task UpdateContact(Guid id, Contact contact)
         {
             ValidateContact(contact);
 
-            var existingContact = Contacts.FirstOrDefault(c => c.Id == contact.Id);
+            var existingContact = Contacts.FirstOrDefault(c => c.Id == id);
 
             if (existingContact == null)
             {
                 throw new Exception("The contact you are trying to update does not exist in the database");
+            }
+
+            if (contact.Id != existingContact.Id && Contacts.Any(c => c.Id == contact.Id))
+            {
+                throw new Exception("There is already another contact with the updated Id you are trying to set.");
             }
 
             var index = Contacts.IndexOf(existingContact);
@@ -41,6 +49,11 @@ namespace PhoneBook.DataAccess.InMemoryImplementation
             Contacts.Insert(index, contact);
 
             return Task.FromResult(true);
+        }
+
+        public Task<IList<Contact>> GetAll()
+        {
+            return Task.FromResult((IList<Contact>)Contacts);
         }
 
         public Task<Contact> GetContact(Guid id)
@@ -52,7 +65,7 @@ namespace PhoneBook.DataAccess.InMemoryImplementation
         {
             var searchTermLowered = searchTerm.ToLower();
 
-            var foundContacts = Contacts.Where(c => 
+            var foundContacts = Contacts.Where(c =>
                 c.FullName.ToLower().Contains(searchTermLowered) ||
                 c.PhoneNumbers.Any(
                     pn => pn.Number.Contains(searchTermLowered)

@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PhoneBook.DataAccess\PhoneBook.DataAccess.csproj" />
     <ProjectReference Include="..\PhoneBook.Models\PhoneBook.Models.csproj" />
   </ItemGroup>
 

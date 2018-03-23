@@ -121,7 +121,7 @@
     <value>The PhoneNumber must have a valid Number defined</value>
   </data>
   <data name="PhoneNumber_Valid_Characters" xml:space="preserve">
-    <value>Allowed characters are digits 0-9, dashes, parentheses and slash</value>
+    <value>Allowed characters are digits 0-9, spaces, dashes, parentheses, slash and plus</value>
   </data>
   <data name="Person_No_Valid_FirstName" xml:space="preserve">
     <value>A Contact must have at least the FirstName defined.</value>

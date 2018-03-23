@@ -7,7 +7,7 @@ namespace PhoneBook.Models
 {
     public class PhoneNumber : BaseValidatableObject, IValidatable
     {
-        private readonly Char[] _allowedExtraCharacters = { '(', ')', '-', '/' };
+        private readonly Char[] _allowedExtraCharacters = { '(', ')', '-', '/','+',' ' };
         public PhoneNumber(PhoneNumberType phoneNumberType, string phoneNumber)
         {
             this.NumberType = phoneNumberType;
