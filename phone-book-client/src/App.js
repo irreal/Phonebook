@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
 import './App.css';
-import ContactComponent from './Components/ContactComponent.js'
+import TableComponent from './Components/TableComponent.js'
 import axios from "axios";
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { contacts: [], newContactFirstName: "", newContactLastName: "", newContactPhoneNumber: "" };
+    this.state = { contacts: [], newContactFirstName: "", newContactLastName: "", newContactPhoneNumber: "", isLoading:false };
   }
 
   loadAllContacts() {
     var _this = this;
+    this.setState({isLoading:true});
     this.serverRequest = axios.get("http://phonebookserver20180323113131.azurewebsites.net/api/contacts").then(function (result) {
       _this.setState({
-        contacts: result.data
+        contacts: result.data,
+        isLoading:false
       });
     }).catch(error => {
+      _this.setState({isLoading:false});
       alert('there was a problem loading the contacts');
       console.log(error);
     });
@@ -57,6 +60,15 @@ class App extends Component {
   }
 
   render() {
+
+    var mainComp;
+    if (this.state.isLoading)  {
+      mainComp = <div>Loading!</div>
+    }
+    else {
+      mainComp = <TableComponent contacts={this.state.contacts} handleDeleteContact={(c)=>this.deleteContact(c)} />
+    }
+
     return (
       <div className="App">
         <header className="App-header">
@@ -67,25 +79,7 @@ class App extends Component {
             Your contacts:
           </p>
           <button onClick={() => { this.loadAllContacts() }}>Refresh</button>
-          <table>
-            <thead>
-              <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>PhoneNumbers</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {this.state.contacts.map(c => {
-                return (
-                  <tr key={c.id}>
-                    <ContactComponent contact={c} handleDelete={(contact)=>this.deleteContact(contact)} />
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          {mainComp}
           <form>
             <label>
               First name:
